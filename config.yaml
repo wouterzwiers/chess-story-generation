@@ -1,3 +1,2 @@
-pgn_gamefiles_folder_path: "chess-moves/pgn"
-# load_game: "test_pawns.pgn"
+pgn_gamefiles_folder_path: "chess-story/pgn"
 load_game: "kasparov_topalov_1999.pgn"
