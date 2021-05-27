@@ -1,6 +1,7 @@
 import argparse
 import chess.pgn
 import os
+import pprint
 import re
 
 from .config import Config
@@ -11,7 +12,6 @@ from .calculations import (
     get_general_info,
     get_development_values
 )
-from .helpers import print_title_block
 from .piece_square_tables import piece_square_tables
 
 
@@ -22,9 +22,10 @@ def main(config_path):
 
     config = Config(config_path)
 
+    load_game = config["load_game"]
     pgn_file_path = os.path.join(
         config["pgn_gamefiles_folder_path"],
-        config["load_game"]
+        load_game
     )
 
     with open(pgn_file_path) as pgn_file:
@@ -50,13 +51,44 @@ def main(config_path):
         for i in general_info
     }
 
-    print_title_block("G A M E   I N F O")
-    for header, text in game.headers.items():
-        print(f"{header}: {text}")
+    # Create the folder specified in the config the file will be exported to.
+    export_output_folder_path = config["export_output_folder_path"]
+    os.makedirs(export_output_folder_path, exist_ok=True)
 
-    print_title_block("M O V E   I N F O")
-    for move_idx, move_info in moves_info.items():
-        print(f"Move {move_idx}: {move_info}")
+    # Figure out which filename to use for the exported file.
+    export_output_filename = config["export_output_filename"]
+    if export_output_filename is None:
+        export_output_filename = load_game
+
+    # Add the suffix to the filename if necessary.
+    export_output_filename_suffix = config["export_output_filename_suffix"]
+    if export_output_filename_suffix is not None:
+        export_output_filename = (export_output_filename_suffix + ".").join(
+            export_output_filename.split(".")
+        )
+
+    # Add the prefix to the filename if necessary.
+    export_output_filename_prefix = config["export_output_filename_prefix"]
+    if export_output_filename_prefix is not None:
+        export_output_filename = (
+            export_output_filename_prefix
+            + export_output_filename
+        )
+
+    # Create the full export path.
+    full_export_path = os.path.join(
+        export_output_folder_path,
+        export_output_filename
+    )
+
+    # Pretty-format the information dict, for easier reading.
+    pformat_moves_info = pprint.pformat(moves_info)
+
+    # Export the file.
+    with open(full_export_path, "w") as exported_file:
+        exported_file.writelines(str(game))
+        exported_file.write("\n"*2)
+        exported_file.writelines(pformat_moves_info)
 
 
 if __name__ == "__main__":

@@ -19,9 +19,3 @@ def get_reversed_piece_square_table(piece_square_table):
         for i in range(0, 64)
     ]
     return reversed_piece_square_table
-
-
-def print_title_block(text):
-    print("\n\n#############################")
-    print(f"###   {text}   ###")
-    print("#############################\n")
