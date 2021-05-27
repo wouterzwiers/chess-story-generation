@@ -1,2 +1,6 @@
 pgn_gamefiles_folder_path: "chess-story/pgn"
 load_game: "kasparov_topalov_1999.pgn"
+export_output_folder_path: "output"
+export_output_filename_prefix: "output_"
+export_output_filename: null
+export_output_filename_suffix: null
