@@ -17,13 +17,14 @@ $ pip install .
 
 To test the functionalities of `chess-story-generation`, in a terminal run:
 ```sh
-$ chess-story
+$ cd /path/to/chess-story-generation
+$ python -m chess-story
 ```
 
 This loads in a default pgn-file stored in the package folder, specified in the `config.yaml` file, and exports the results of the analyses to a text-file.
 
-To analyze a different pgn-file, place the pgn-file in a folder of your chosing.
+To analyze a different pgn-file, place the pgn-file in a folder of your choosing.
 Then adjust the existing `config.yaml` or pass a new one, like this:
 ```sh
-$ chess-story --config /path/to/my_config.yaml
+$ python -m chess-story --config /path/to/my_config.yaml
 ```
