@@ -19,7 +19,7 @@ from .piece_square_tables import piece_square_tables
 DEFAULT_CONFIG_PATH = r"config.ya?ml"
 
 
-def main(config_path):
+def main(config_path, silent, force):
 
     # Get the config-file.
     config = Config(config_path)
@@ -30,6 +30,7 @@ def main(config_path):
         config["pgn_gamefiles_folder_path"],
         load_game
     )
+    
 
     # Read in the game-file specified in the config.
     with open(pgn_file_path) as pgn_file:
@@ -63,17 +64,33 @@ def main(config_path):
     # Pretty-format the information dict, for easier reading.
     pformat_moves_info = pprint.pformat(moves_info)
 
-    # Export the file.
+    # Check if to be exported file already exists.
     full_export_path = get_full_export_path(load_game, config)
+    if os.path.isfile(full_export_path):
+        if not force:
+            raise OSError(
+                f"The following file already exists: '{full_export_path}'. "
+                "To force overwriting the file, add the 'force' command using "
+                "'-f' or '--force'."
+            )
+
+    # Export the file.
     with open(full_export_path, "w") as exported_file:
         exported_file.writelines(str(game))
         exported_file.write("\n"*2)
         exported_file.writelines(pformat_moves_info)
-
+    
+    # Provide user with visual feedback.
+    if not silent:
+        print("\n### Chess-Story-Generation ###")
+        print(f"1. Analyzed file {load_game}.")
+        print(f"2. Exported results to {full_export_path}.")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", type=str, default=None)
+    parser.add_argument("-s", "--silent", action="store_true")
+    parser.add_argument("-f", "--force", action="store_true")
     args = parser.parse_args()
 
     if args.config is None:
@@ -90,4 +107,4 @@ if __name__ == "__main__":
     else:
         config_path = args.config
 
-    main(config_path)
+    main(config_path, args.silent, args.force)
