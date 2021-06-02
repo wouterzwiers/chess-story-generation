@@ -15,6 +15,7 @@ from .calculations import (
 from .generation import generate_sentence
 from .helpers import get_full_export_path
 from .piece_square_tables import piece_square_tables
+from .sentences import sentences
 
 
 DEFAULT_CONFIG_PATH = r"config.ya?ml"
@@ -60,10 +61,10 @@ def main(config_path, silent, force):
     }
 
     # Generate a story for the moves.
-    sentences = []
+    story = []
     for move_idx, move_info in moves_info.items():
-        sentence = generate_sentence(move_idx, move_info)
-        sentences.append(sentence)
+        sentence = generate_sentence(move_idx, move_info, sentences)
+        story.append(sentence)
 
     # Create the folder specified in the config the file will be exported to.
     os.makedirs(config["export_output_folder_path"], exist_ok=True)
@@ -85,7 +86,7 @@ def main(config_path, silent, force):
     with open(full_export_path, "w") as exported_file:
         exported_file.writelines(str(game))
         exported_file.write("\n"*2)
-        exported_file.write("\n".join(sentences))
+        exported_file.write("\n".join(story))
         exported_file.write("\n"*2)
         exported_file.writelines(pformat_moves_info)
     
