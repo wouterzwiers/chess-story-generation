@@ -2,7 +2,9 @@ from random import choice
 
 
 def get_generation_key(move_info):
-    if move_info["defending_move"]:
+    if move_info.get("game_end_caused_by"):
+        return move_info["game_end_caused_by"]
+    elif move_info["defending_move"]:
         return "defending"
     elif move_info["attacking_move"]:
         return "attacking"

@@ -149,6 +149,18 @@ sentences = {
             "The queen's soldiers wreaked havoc.",
             "The queen's interference proved effective, slaughtering many enemies."
         ],
+        "checkmate": [
+            "Queen-Checkmate-1",
+            "Queen-Checkmate-2",
+        ],
+        "draw": [
+            "Queen-Draw-1",
+            "Queen-Draw-2",
+        ],
+        "resignation": [
+            "Queen-Resignation-1",
+            "Queen-Resignation-2",
+        ],
     },
     "K": {
         "defending": [
