@@ -56,6 +56,31 @@ def get_attacks_info(move_stack):
     return attacks_info
 
 
+def get_ending_info(move_stack, last_row):
+    # Keys contained within last row indicate game ending.
+    game_endings = {
+        "1/2": "draw",
+        "#": "checkmate"
+    }
+
+    # Create a key-value pair for each move to prevent KeyErrors.
+    ending_info = {}
+    for move_idx, move in enumerate(move_stack):
+        ending_info.setdefault(move_idx, {})
+
+    # Check if any of the game endings exist within the last row.
+    for indicator, game_ending in game_endings.items():
+        if indicator in last_row:
+            break
+    else:
+        game_ending = "resignation"
+
+    # move_idx is simply the last move_idx from the key-value pair creation.
+    ending_info[move_idx]["game_end_caused_by"] = game_ending
+
+    return ending_info
+
+
 def get_general_info(moves):
     general_info = {}
     board = chess.Board()
