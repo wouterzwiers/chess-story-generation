@@ -89,7 +89,7 @@ def main(config_path, silent, force):
             )
 
     # Export the file.
-    with open(full_export_path, "w") as exported_file:
+    with open(full_export_path, "w", encoding="utf-8") as exported_file:
         exported_file.writelines(str(game))
         exported_file.write("\n"*2)
         exported_file.write("\n".join(story))
