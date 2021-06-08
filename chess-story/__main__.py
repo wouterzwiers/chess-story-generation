@@ -10,7 +10,8 @@ from .calculations import (
     get_captures_info,
     get_defenses_info,
     get_general_info,
-    get_development_values
+    get_development_values,
+    get_ending_info
 )
 from .generation import generate_sentence
 from .helpers import get_full_export_path
@@ -32,11 +33,14 @@ def main(config_path, silent, force):
         config["pgn_gamefiles_folder_path"],
         load_game
     )
-    
 
     # Read in the game-file specified in the config.
     with open(pgn_file_path) as pgn_file:
         game = chess.pgn.read_game(pgn_file)
+
+    # Read in the raw file's last row; only used for ending info.
+    with open(pgn_file_path) as file:
+        last_row = file.readlines()[-1]
 
     # Retrieve all moves from game.
     moves = game.mainline_moves()
@@ -47,6 +51,7 @@ def main(config_path, silent, force):
     defenses_info = get_defenses_info(moves)
     captures_info = get_captures_info(moves)
     general_info = get_general_info(moves)
+    ending_info = get_ending_info(moves, last_row)
 
     # Merge all retrieved information together.
     moves_info = {
@@ -56,6 +61,7 @@ def main(config_path, silent, force):
             **attacks_info[i],
             **defenses_info[i],
             **captures_info[i],
+            **ending_info[i],
         }
         for i in general_info
     }
