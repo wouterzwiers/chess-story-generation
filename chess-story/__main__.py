@@ -45,22 +45,6 @@ def main(config_path, silent, force):
     # Retrieve all moves from game.
     moves = game.mainline_moves()
 
-    game_endings = {
-        "1/2": "draw",
-        "#": "checkmate"
-    }
-
-    ending_info = {}
-    for move_idx, move in enumerate(moves):
-        ending_info.setdefault(move_idx, {})
-
-    for game_ending in game_endings:
-        if game_ending in last_row:
-            ending_info[move_idx]["caused_end_thru"] = game_endings[game_ending]
-    else:
-        ending_info[move_idx]["caused_end_thru"] = "resignation"
-            
-
     # Get all information over the moves from game.
     development_values = get_development_values(moves, piece_square_tables)
     attacks_info = get_attacks_info(moves)
