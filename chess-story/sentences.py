@@ -181,15 +181,18 @@ sentences = {
         ],
     },
     "checkmate": [
-        "Checkmate-1",
-        "Checkmate-2",
+        "Finally, the king was surrounded and killed by one final vicious blow.",
+        "After a long battle, in which many of his soldiers had fallen, the king himself was also killed by the onrushing enemy armies.",
+        "In the end, there was no stopping it. The king and his men were overwhelmed by one final attack, which left the king mortally wounded."
     ],
     "draw": [
-        "Draw-1",
-        "Draw-2",
+        "After a long battle, with many casualties on both sides, both kings were willing to negotiate peace.",
+        "Both kings realised that they had misjudged the strength of their opponent. Achieving a victory would be a difficult task for both armies, so they entered into negotiations.",
+        "After great losses on both sides, both kings decided it was better to resolve their differences diplomatically."
     ],
     "resignation": [
-        "Resignation-1",
-        "Resignation-2",
+        "The situation became more desperate by the minute and the king finally decided to surrender.",
+        "After a long battle, during which many of his men were killed, the king threw down his arms and was captured.",
+        "As more of his soldiers were killed, the king began to see the futility of continuing to fight. He ordered his troops to lay down their arms and allowed himself to be captured."
     ],
 }
